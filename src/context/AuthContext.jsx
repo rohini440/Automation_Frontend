@@ -75,6 +75,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Complete setup handler
+  const completeSetup = async (organizationName) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await API.post('/auth/setup', { organizationName });
+      if (res.data?.success) {
+        setUser(res.data.user);
+        return { success: true };
+      }
+    } catch (err) {
+      const errMsg = err.response?.data?.message || err.message || 'Setup failed';
+      setError(errMsg);
+      return { success: false, error: errMsg };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Logout handler
   const logout = () => {
     localStorage.removeItem('token');
@@ -82,7 +101,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, register, logout, setError }}>
+    <AuthContext.Provider value={{ user, loading, error, login, register, logout, completeSetup, setError }}>
       {children}
     </AuthContext.Provider>
   );

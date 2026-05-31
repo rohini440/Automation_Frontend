@@ -14,6 +14,10 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
+  if (user.setupCompleted === false) {
+    return <Navigate to="/setup" replace />;
+  }
+
   return children;
 };
 

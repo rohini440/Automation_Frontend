@@ -8,22 +8,56 @@
   --color-primary-600: #059669;
   --color-primary-700: #047857;
   
-  --color-dark-bg: #0b0f19;
-  --color-dark-card: #121826;
-  --color-dark-border: #1f2937;
+  --color-dark-bg: var(--bg-app);
+  --color-dark-card: var(--bg-card);
+  --color-dark-border: var(--border-color);
   
   --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Base styles & fonts */
+:root {
+  /* Default: Dark Theme */
+  --bg-app: #0b0f19;
+  --bg-card: #121826;
+  --border-color: #1f2937;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --accent-primary: #10b981;
+  --accent-secondary: #3b82f6;
+  --accent-hover: #059669;
+  --glass-bg: rgba(18, 24, 38, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --table-header: rgba(15, 23, 42, 0.4);
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --light-toggle-color: #f59e0b;
+}
 
+:root.light-theme {
+  /* Light Theme - Clean Zoho Corporate Style */
+  --bg-app: #f4f6f9;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --accent-primary: #0068ff;
+  --accent-secondary: #10b981;
+  --accent-hover: #0052cc;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --table-header: #f8fafc;
+  --card-shadow: 0 4px 20px -2px rgba(148, 163, 184, 0.12), 0 2px 8px -1px rgba(148, 163, 184, 0.08);
+  --light-toggle-color: #475569;
+}
+
+/* Base styles & fonts */
 html, body {
-  background-color: #0b0f19;
-  color: #f3f4f6;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
   font-family: 'Outfit', 'Inter', sans-serif;
   scroll-behavior: smooth;
   min-height: 100vh;
   margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom Scrollbar */
@@ -32,22 +66,24 @@ html, body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b0f19;
+  background: var(--bg-app);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1f2937;
+  background: var(--border-color);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: var(--text-secondary);
 }
 
 /* Glassmorphism Class */
-.glass {
-  background: rgba(18, 24, 38, 0.7);
+@utility glass {
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Animations */
@@ -68,11 +104,20 @@ html, body {
 
 /* Custom gradient styles */
 .gradient-text {
-  background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+}
+
+/* Zoho Style Widgets */
+.zoho-badge {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border;
+}
+
+.zoho-card {
+  @apply glass p-6 rounded-2xl shadow-xl hover:translate-y-[-2px] hover:shadow-2xl transition-all duration-300;
 }

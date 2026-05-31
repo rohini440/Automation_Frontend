@@ -7,6 +7,8 @@ import Navbar from './components/Navbar';
 // Pages
 import Login from './pages/Login';
 import Register from './pages/Register';
+import LandingPage from './pages/LandingPage';
+import QuickSetup from './pages/QuickSetup';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
@@ -18,7 +20,7 @@ import Profile from './pages/Profile';
 const DashboardLayout = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
-    <div className="flex min-h-screen bg-[#0b0f19] text-gray-100 font-sans">
+    <div className="flex min-h-screen bg-[var(--bg-app)] text-[var(--text-primary)] font-sans transition-colors duration-300">
       <Sidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
       <div className="flex flex-col flex-1 min-w-0">
         <Navbar onMenuToggle={() => setMobileOpen(!mobileOpen)} />
@@ -36,13 +38,15 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Public Session Routes */}
+        {/* Public Routes */}
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/setup" element={<QuickSetup />} />
 
         {/* Protected Dashboard/Inventory Routes */}
         <Route 
-          path="/" 
+          path="/dashboard" 
           element={
             <ProtectedRoute>
               <DashboardLayout>
